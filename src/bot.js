@@ -1,87 +1,122 @@
-require('dotenv').config();
-
-const { Client, Guild } = require('discord.js')
+const { Client } = require('discord.js')
 const bot = new Client();
 
-const german = require('../languages/german.json')
-const extra = require('../languages/extra.json')
+const path = require('path')
+const fs = require('fs')
 
-const config = require('../config/config.json')
+const extra = require('../languages/extra.json')
+const avatar = require('../commands/avatar')
+const debug = require('../commands/debug')
+const giveaway = require('../commands/giveaway')
+const help = require('../commands/help')
+const selfRole = require('../commands/selfRole')
+const servers = require('../commands/servers')
+const setfriendrole = require('../commands/setfriendrole')
+const setfriendwelcome = require('../commands/setfriendwelcome')
+const setgiveawayrole = require('../commands/setgiveawayrole')
+const setprefix = require('../commands/setprefix')
+const setwelcome = require('../commands/setwelcome')
+const status = require('../commands/status')
+const logsystem = require('../function/log-system')
+const setupstats = require('../commands/setupstats')
+const mongo = require('../function/mongo')
+const configSchema = require('../schema/config-schema')
+
 const token = require('../config/token.json')
-const command = require('../commands/command')
 
 //Bot login
 bot.login(token.DISCORDJS_BOT_TOKEN);
 
 //Check if bot is online
-bot.on('ready', () => {
+
+bot.on('ready', async () => {
 
     console.log(`${bot.user.tag}`)
     bot.user.setPresence({
         activity: {
-            name: "auf Sara's Möthharem",
+            name: `${extra.first_state}`,
             //Types -> "PLAYING", "STREAMING", "LISTENING", "WATCHING" -> Später im Command änderbar. Also auch Liste dafür.
             type: 'WATCHING'
         }
     })
-});
 
-command(bot, 'servers', (message) => {
+    avatar(bot)
+    debug(bot)
+    giveaway(bot)
+    help(bot)
+    selfRole(bot)
+    servers(bot)
+    setfriendrole(bot)
+    setfriendwelcome(bot)
+    setgiveawayrole(bot)
+    setprefix(bot)
+    setwelcome(bot)
+    status(bot)
+    logsystem(bot)
+    setupstats(bot)
 
-    if (message.author.bot){return;}
-    if (message.author.id === (config.DEBUGID)){
-    bot.guilds.cache.forEach((guild) => {
-        message.channel.send(
-        `${guild.name} | ${german.has_a_total_of} ${guild.memberCount} ${german.Members}`
-        )
-    })
-}else{message.channel.send(`${message.author.username} ${german.not_allowed}`)}
-})
-
-command(bot, 'status', (message) => {
-    const status = message.content.replace(`${ config.prefix }status`, '')
-
-    bot.user.setPresence({
-        activity: {
-            name: status,
-            //Types -> "PLAYING", "STREAMING", "LISTENING", "WATCHING" -> Später im Command änderbar. Also auch Liste dafür.
-            type: 'WATCHING'
+    /*const baseFile = 'command.js'
+    const commandBase = require(`./command/${baseFile}`)
+  
+    const readCommands = (dir) => {
+      const files = fs.readdirSync(path.join(__dirname, dir))
+      for (const file of files) {
+        const stat = fs.lstatSync(path.join(__dirname, dir, file))
+        if (stat.isDirectory()) {
+          readCommands(path.join(dir, file))
+        } else if (file !== baseFile) {
+          const option = require(path.join(__dirname, dir, file))
+          commandBase(bot, option)
         }
+      }
+    }
+  
+    readCommands('command')
+  });
+ 
+    bot.guilds.cache.forEach(async (guild) => {
+        //1 | 2 | 3 | 4
+        await mongo().then(async (mongoose) => {
+            try {
+               await configSchema.findOneAndUpdate({
+                   _id: guild.id
+               }, {
+                    _id: guild.id,
+                    prefix: "OS!" //<- Wenn keine Config existiert, soll automatisch eine erstellt werden und als Standart Prefix "OS!" genommen werden. Aber, falls config existiert, soll nichts geändert werden.
+               }, {
+                   upsert: true
+               })
+            } finally {
+                 
+            }
+        })
+    
+        console.log("Config created")
     })
-    message.channel.send( `${ german.pressence_set_to } ${ extra.text_codeblock }${ status }${ extra.text_codeblock }` )
-})
+     */
+  })
+ 
 
-//Read & answer on message
-bot.on('message', (message) => {
-
-    if (message.author.bot) return;
-    console.log(`[${message.author.tag}]: ${message.content}`);
-    if (message.content === 'test'){
-    message.channel.send(config.TESTMESSAGE)
-    }
-});
-
-//Creates Debug rank and gives it to DiscordID in the .env
-
-//Avatarlink
-bot.on('message', (message) => {
-
-    if (message.author.bot) return;
-    if (message.content === 'Avatar'){
-    message.channel.send(config.AVATARLINK)
-    }
-});
-
-
+// Help command einrichten. <- Priorität
 // Man soll Privat nachrichten erhalten können, wenn mit einem was gemacht wird. (Rang erhalten, entfernen, kicken, bannen, muten, moven, etc.)
 // Diese Benachrichtigungen kann man an & Ausschalten.
 // Man soll auch Silent an machen können, damit man unbemerkt leute moven, kicken, bannen, etc. kann. -> Man erhält keine Benachrichtigung mehr.
 // Bot soll Musik im Channel abspielen können || Dabei soll er auch Nightcore, Vaporwave, etc. haben.
 // Nachrichten schöner gestallten
+// Mehrere Sprachen integrieren -> Standart Englisch
+// Join, booster Nachrichten -> Kann aktiviert werden.
+// Karuta automatischer Worker sucher.
+// Server Name, Region, etc über Bot einstellbar
+// LOG System
+// Self-Roles
 // Git-Lab / Git-Hub einrichten -> Damit man mit verfolgen kann, was neu ist.
 // Debug Rang fertig machen
 // Ban, Mute, Kick, etc. || Administrative Commands
 // Webinterface || Alles soll darber Konfiguriert werden können. -> Als auch soll darin ein Admin Interface & User Interface befinden. Im Interface soll man weitere Module für den Bot hinzufügen können und dann über die Webseite geladen werden. (Alexa Echo mässig)
 // Level System || von MEE6 importierbar.
-// Help command einrichten.
 // Type command für Pressence einrichten.
+// MongoDB einrichten und lernen
+
+
+// Giveaway System
+

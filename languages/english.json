@@ -1,0 +1,15 @@
+{
+    "has_a_total_of": "has a total of",
+    "Members": "Members",
+    "not_allowed": "You don't have access to it.",
+    "pressence_set_to": "Status set to",
+    "check_youre_dms": "Check youre dms",
+    "friendWelcomeText1": "Oh",
+    "friendWelcomeText2": "is now also here",
+    "WelcomeText1": "Welcome",
+    "WelcomeText2": "to test",
+    "WelcomeSet": "Welcome channel is set",
+    "StatsSetup": ":repeat: The setup has been started and will take a couple of seconds to finish, so please wait a moment.",
+    "StatsSetupFinish": ":white_check_mark: The setup has been completed and will now automatically update the counters",
+    "missingMC": ":x: I'm missing the following permission `Manage Channels` in this server (you can change this in the server settings)."
+}

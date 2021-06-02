@@ -1,5 +1,5 @@
 {
-  "name": "discordbot",
+  "name": "kirillos",
   "version": "1.0.0",
   "description": "",
   "main": "./src/bot.js",
@@ -13,6 +13,9 @@
   "dependencies": {
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.11.17"
+    "mongodb": "^3.6.5",
+    "mongoose": "^5.12.3",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.7"
   }
 }
