@@ -22,7 +22,7 @@ const setupstats = require('../commands/setupstats')
 const mongo = require('../function/mongo')
 const configSchema = require('../schema/config-schema')
 
-const token = require('../config/token.json')
+const token = require('../config/mongodb.json')
 
 //Bot login
 bot.login(token.DISCORDJS_BOT_TOKEN);
