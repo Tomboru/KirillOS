@@ -1,3 +1,4 @@
+//Some code is from https://github.com/jagrosh/GiveawayBot
 const command = require('../commands/command')
 const server = require('../config/config.json');
 let Discord = require('discord.js');
