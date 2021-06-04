@@ -19,6 +19,7 @@ module.exports = (bot) => {
 
         if (split.length < 3) {
             channel.send('Please provide a titel')
+            return;
         }
 
         split.shift()
@@ -86,6 +87,48 @@ module.exports = (bot) => {
             }
         })
         channel.send('Color successfully set')
+    })
+
+    command(bot, 'firstjoin description', async (message) => {
+        const { member, channel, content, guild } = message
+
+        if (!member.hasPermission('ADMINISTRATOR')) {
+            channel.send(`${english.not_allowed}`)
+            return;
+        }
+
+        let text = content
+
+        const split = text.split(' ')
+
+        if (split.length < 3) {
+            channel.send('Please provide a description')
+            return;
+        }
+
+        split.shift()
+        split.shift()
+        var description = ""
+        for(var i = 0; i<split.length; i++){
+            description +=" "+ split[i]
+        }
+        console.log(description)
+
+        await mongo().then(async (mongoose) => {
+            try {
+                await fjdescriptionschema.findOneAndUpdate({
+                    _id: guild._id
+                }, {
+                    _id: guild.id,
+                    text: description,
+                }, {
+                    upsert: true
+                })
+            } finally {
+                mongoose.connection.close()
+            }
+        })
+        channel.send('Description successfully set')
     })
 
 }
