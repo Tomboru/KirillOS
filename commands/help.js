@@ -10,7 +10,7 @@ module.exports = (bot) => {
         if (message.author.bot){return;}
         if (message.guild){
             let embed = new Discord.MessageEmbed()
-            .setAuthor(bot.user.username, bot.user.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }), 'https://github.com/fekt/discord-giveaway-bot')
+            .setAuthor(bot.user.username, bot.user.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }))
             .setThumbnail(bot.user.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }))
             .setColor('7289da')
             .setDescription(`You need more help for one command?                               \nJust write ${config.prefix}(Command)`)

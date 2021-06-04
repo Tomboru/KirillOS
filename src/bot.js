@@ -21,6 +21,7 @@ const logsystem = require('../function/log-system')
 const setupstats = require('../commands/setupstats')
 const mongo = require('../function/mongo')
 const configSchema = require('../schema/config-schema')
+const firstjoin = require('../function/firstjoin')
 
 const token = require('../config/mongodb.json')
 
@@ -54,6 +55,7 @@ bot.on('ready', async () => {
     status(bot)
     logsystem(bot)
     setupstats(bot)
+    firstjoin(bot)
 
     /*const baseFile = 'command.js'
     const commandBase = require(`./command/${baseFile}`)
