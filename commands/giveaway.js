@@ -15,7 +15,6 @@ module.exports = (bot) => {
             dbo.collection("giveaway").insertOne(data, function(err, res) {
               if (err) throw err;
               console.log("New Giveaway was created");
-              db.close();
             });
           });
     }

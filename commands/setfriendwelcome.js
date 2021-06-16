@@ -48,7 +48,6 @@ module.exports = (bot) => {
                    upsert: true
                })
             } finally {
-                mongoose.connection.close()
             }
         })
         
@@ -79,7 +78,6 @@ module.exports = (bot) => {
                     cache2[guild.id] = data2 = [role.roleId]
                 }
                 } finally {
-                   mongoose.connection.close()
                 }
             })
         

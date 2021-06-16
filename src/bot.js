@@ -42,6 +42,8 @@ bot.on('ready', async () => {
         }
     })
 
+    await mongo()
+
     avatar(bot)
     debug(bot)
     giveaway(bot)
@@ -56,7 +58,6 @@ bot.on('ready', async () => {
     status(bot)
     logsystem(bot)
     setupstats(bot)
-    firstjoin(bot)
     setfirstjoin(bot)
 
     /*const baseFile = 'command.js'

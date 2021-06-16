@@ -7,8 +7,6 @@ const friendRoleSchema = require('../schema/friend-role-schema')
 
 module.exports = (bot) => {
 
-    const cache = {}
-
     command(bot, 'setfriendrole', async (message) => {
         const { member, channel, content, guild } = message
 
@@ -39,8 +37,6 @@ module.exports = (bot) => {
             return
         }
 
-        cache[guild.id] = [text]
-
         await mongo().then(async (mongoose) => {
             try {
                await friendRoleSchema.findOneAndUpdate({
@@ -52,7 +48,6 @@ module.exports = (bot) => {
                    upsert: true
                })
             } finally {
-                mongoose.connection.close()
             }
         })
 

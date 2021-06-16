@@ -44,7 +44,6 @@ module.exports = (bot) => {
                    upsert: true
                })
             } finally {
-                mongoose.connection.close()
             }
         })
 
@@ -54,34 +53,35 @@ module.exports = (bot) => {
 
     const onJoin = async member => {
         const { guild } = member
-        var result = null
 
         //Search cache from Guild.id
         let data = cache[guild.id]
+        console.log("Caching from data2")
 
+        if(!data){
             console.log('FETCHING FROM DATABASE')
 
+            
             await mongo().then(async (mongoose) => {
                 try {
                     result = await welcomeSchema.findOne({ _id: guild.id })
 
-                    if(result != null)
-
+                    console.log(result)
+                    if(result == null)return;
+                    console.log("Caching from data")
                     cache[guild.id] = data = [result.channelId, result.text]
                 } finally {
-                   mongoose.connection.close()
                 }
             })
-
-        if(result != null){
+        }
+        if(result == null)return;
 
         const channelId = data[0]
         const text = data[1]
 
         const channel = guild.channels.cache.get(channelId)
         channel.send(text.replace(/<@>/g, `<@${member.id}>`).replace(/<§>/g, `${guild.name}`))
-    }
-    }
+}
 
     command(bot, 'simjoin', message => {
         const { member } = message

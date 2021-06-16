@@ -18,7 +18,6 @@ module.exports = (bot) => {
             dbo.collection("logs").insertOne(data, function(err, res) {
               if (err) throw err;
               console.log("New Log was created");
-              db.close();
             });
           });
     }

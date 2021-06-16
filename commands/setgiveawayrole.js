@@ -52,7 +52,6 @@ module.exports = (bot) => {
                    upsert: true
                })
             } finally {
-                mongoose.connection.close()
             }
         })
 
