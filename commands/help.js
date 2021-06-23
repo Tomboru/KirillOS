@@ -26,4 +26,5 @@ module.exports = (bot) => {
                 message.author.send(embed);
         }
     })
+
 }

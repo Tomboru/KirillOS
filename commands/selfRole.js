@@ -5,7 +5,7 @@ const extra = require('../languages/extra.json')
 const english = require('../languages/english.json')
 
 module.exports = (bot) => {
-    command(bot, 'rp', (message) => { 
+    command(bot, 'sr', (message) => { 
 
         if (message.author.bot)return;
         

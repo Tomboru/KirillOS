@@ -56,7 +56,7 @@ module.exports = (bot) => {
 
         //Search cache from Guild.id
         let data = cache[guild.id]
-        console.log("Caching from data2")
+        console.log("Caching from setwelcome")
 
         if(!data){
             console.log('FETCHING FROM DATABASE')
@@ -90,6 +90,7 @@ module.exports = (bot) => {
             return
         }
         onJoin(message.member)
+
     })
 
     bot.on('guildMemberAdd', member => {

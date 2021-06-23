@@ -36,8 +36,8 @@ module.exports = (bot) => {
         /////// The clear function still in work
         ///////
         ///////
-        if(titel == 'clear'){
-            var titel = ""
+        if(titel === "clear"){
+            titel = ""
             console.log("Only clear");
             console.log(titel)
         }else{
@@ -166,8 +166,10 @@ module.exports = (bot) => {
             return;
         }
 
-        var toggle = new Boolean("")
+        var toggle = 1
         //cache[guild.id] = [toggle]
+
+        console.log(toggle)
 
         await mongo().then(async (mongoose) => {
             try {
@@ -175,12 +177,13 @@ module.exports = (bot) => {
                     _id: guild.id
                 }, {
                     _id: guild.id,
-                    toggle: toggle,
+                    toggle1: toggle,
                 }, {
                     upsert: true
                 })
             } finally {
             }
+            console.log(toggle)
         })
         channel.send('Join PM deactivated')
     })
@@ -203,7 +206,8 @@ module.exports = (bot) => {
             return;
         }
     
-        var toggle = new Boolean(true)
+        var toggle = 2
+        console.log(toggle)
         //cache[guild.id] = [toggle]
     
         await mongo().then(async (mongoose) => {
@@ -212,7 +216,7 @@ module.exports = (bot) => {
                     _id: guild.id
                 }, {
                     _id: guild.id,
-                    toggle: toggle,
+                    toggle1: toggle,
                 }, {
                     upsert: true
                 })
@@ -225,9 +229,9 @@ module.exports = (bot) => {
      const onJoin = async member => {
             const { guild } = member
         
-           // let data = cache[guild.id]
+            //let data = cache[guild.id]
             
-            //if(!data){
+           // if(!data){
                 console.log('Fetching First Join from DATABASE')
         
                 await mongo().then(async (mongoose) => {
@@ -237,7 +241,7 @@ module.exports = (bot) => {
                         //console.log(result2)
                         if(result2 == null)return;
                         console.log("Caching first join from data")
-                        cache[guild.id] = data = [result2.titel, result2.color, result2.description, result2.toggle]
+                        cache[guild.id] = data = [result2.titel, result2.color, result2.description, result2.toggle1]
                     } finally {
                     }
                 })
@@ -249,17 +253,29 @@ module.exports = (bot) => {
             const description = data[2]
             const toggle = data[3]
         
-            console.log(color)
+            console.log(toggle)
 
-            if(toggle == false)return;
-        
+            if(toggle == 1)return;
+
             let embed = new Discord.MessageEmbed()
-            .setAuthor(titel, bot.user.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }))
+            .setAuthor(titel.replace(/<@>/g, `<@${member.id}>`).replace(/<§>/g, `${guild.name}`), bot.user.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }))
             .setThumbnail(member.user.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }))
             .setColor(color)
-            .setDescription(description)
+            .setDescription(description.replace(/<@>/g, `<@${member.id}>`).replace(/<§>/g, `${guild.name}`))
+            .setFooter('KirillOS')
+            .setTimestamp()
             member.send(embed);
         };
+
+        command(bot, 'simjoin', message => {
+            const { member } = message
+            if (!member.hasPermission('ADMINISTRATOR')) {
+                channel.send(`${english.not_allowed}`)
+                return
+            }
+            onJoin(message.member)
+    
+        })
 
         bot.on('guildMemberAdd', member => {
             onJoin(member)

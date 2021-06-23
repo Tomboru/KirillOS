@@ -10,7 +10,7 @@ const fjSchema = mongoose.Schema({
     titel: reqString,
     color: reqString,
     description: reqString,
-    toggle1: Boolean,
+    toggle1: reqString,
 })
 
 module.exports = mongoose.model('fjs', fjSchema)

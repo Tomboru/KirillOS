@@ -55,7 +55,7 @@ module.exports = (bot) => {
         
     })
 
-    bot.on('guildMemberUpdate', async member => {
+    /*bot.on('guildMemberUpdate', async member => {
         const { guild } = member
         var result = null
         var role = null
@@ -96,4 +96,5 @@ module.exports = (bot) => {
          }
         }
     })
+    */
 }
