@@ -1,2 +1,4 @@
 config/mongodb.json
 config/token.json
+extra
+.env
