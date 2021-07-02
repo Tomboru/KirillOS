@@ -76,6 +76,31 @@ module.exports = async (client) => {
         }
 
         try {
+        const msg = await message.channel.messages.fetch('id')
+
+        if (!msg) {
+            console.log(`Removing message ID ${messageId} from the database`)
+            await messageSchema.deleteOne({ messageId })
+            return;
+        }
+    } catch{}
+
+        /*client.on('messageDelete'), async (message) => {
+            
+            try {
+                const msg = await message.channel.messages.fetch('id')
+        
+                if (!msg) {
+                    console.log(`Removing message ID ${messageId} from the database`)
+                    await messageSchema.deleteOne({ messageId })
+                    return;
+                }
+            } catch{}
+        }*/
+
+
+
+        try {
             const cacheMessage = true
             const skipCache = true
             const fetchedMessage = await channel.messages.fetch(messageId, cacheMessage, skipCache)

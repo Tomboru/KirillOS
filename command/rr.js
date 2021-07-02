@@ -67,7 +67,6 @@ module.exports = {
 
         const obj = {
             guildId: guild.id,
-            channelId: fetchedMessage.channelId,
             messageId: fetchedMessage.id
         }
 
