@@ -1,4 +1,5 @@
 const messageSchema = require('../schema/message')
+let Discord = require('discord.js')
 
 const cache = {}
 
@@ -33,8 +34,21 @@ const handleReaction = (reaction, user, adding) => {
                 const role = guild.roles.cache.get(roles[key])
                 if (role) {
                     const member = guild.members.cache.get(user.id)
+                    let blocked = "329606166537568256"
                 
                     if (adding) {
+                        if (member.id === (blocked)){
+                            console.log("Ja okay")
+                            let embed = new Discord.MessageEmbed()
+                                .setAuthor('You are warned',)
+                                .setThumbnail(user.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }))
+                                .setColor('c0392b')
+                                .setDescription(`Due to many warnings, you cannot use reaction roles.`) //\n${target} has now ${countwarns}
+                                .addField(`Please contact a staff`, `${guild.name}`)
+                                .setTimestamp()
+                                user.send(embed);
+                            return;
+                        } 
                         member.roles.add(role)
                     } else {
                         member.roles.remove(role)
@@ -70,22 +84,34 @@ module.exports = async (client) => {
         const channel = await guild.channels.cache.get(channelId)
 
         if (!channel) {
-            console.log(`Removing channel ID "${channelId} from the database`)
+            console.log(`Removing channel ID "${channelId} from the database22222`)
             await messageSchema.deleteOne({ channelId })
             return;
         }
 
+    
+    client.on('messageDelete', async (message) => {
         try {
-        const msg = await message.channel.messages.fetch('id')
+            const cacheMessage = true
+            const skipCache = true
+            const fetchedMessage = await channel.messages.fetch(messageId, cacheMessage, skipCache)
 
-        if (!msg) {
-            console.log(`Removing message ID ${messageId} from the database`)
+            if (fetchedMessage) {
+                const newRoles = {}
+
+                for (const role of roles) {
+                    const { emoji, roleId } = role
+                    newRoles[emoji] = roleId
+                }
+
+                cache[guildId] = [fetchedMessage, newRoles]
+            }
+        } catch (e) {
+            console.log(`Removing message ID ${messageId} from the database1`)
             await messageSchema.deleteOne({ messageId })
-            return;
         }
-    } catch{}
-
-        /*client.on('messageDelete'), async (message) => {
+    })
+       /* client.on('messageDelete'), async (message) => {
             
             try {
                 const msg = await message.channel.messages.fetch('id')
@@ -116,7 +142,7 @@ module.exports = async (client) => {
                 cache[guildId] = [fetchedMessage, newRoles]
             }
         } catch (e) {
-            console.log(`Removing message ID "${messageId} from the database`)
+            console.log(`Removing message ID ${messageId} from the database`)
             await messageSchema.deleteOne({ messageId })
         }
     }

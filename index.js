@@ -8,7 +8,8 @@ client.on('ready', () => {
   new WOKCommands(client, {
     commandsDir: 'command',
     featureDir: 'features',
-    showWarns: true
+    showWarns: true,
+    testServers: ['799038636816596992']
   }).setMongoPath(process.env.MONGODBL)
 })
 
