@@ -107,6 +107,7 @@ module.exports = async (client) => {
                 cache[guildId] = [fetchedMessage, newRoles]
             }
         } catch (e) {
+            console.log(e)
             console.log(`Removing message ID ${messageId} from the database1`)
             await messageSchema.deleteOne({ messageId })
         }
@@ -142,6 +143,7 @@ module.exports = async (client) => {
                 cache[guildId] = [fetchedMessage, newRoles]
             }
         } catch (e) {
+            console.log(e)
             console.log(`Removing message ID ${messageId} from the database`)
             await messageSchema.deleteOne({ messageId })
         }
