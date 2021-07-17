@@ -23,7 +23,7 @@ module.exports = {
         }
 
         if (!guild.me.hasPermission('MANAGE_ROLES')) {
-            message.reply('The bot requires acces to manage roles to be able to give or remove roles0')
+            message.reply('The bot requires acces to manage roles to be able to give or remove roles')
             return;
         }
 
