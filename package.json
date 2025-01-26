@@ -16,7 +16,7 @@
     "mongodb": "^3.6.5",
     "mongoose": "^5.13.15",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.7",
+    "nodemon": "^2.0.22",
     "wokcommands": "^1.3.6"
   }
 }
